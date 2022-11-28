@@ -6,16 +6,14 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class ATM extends JFrame {
-	//Variables for balance, the input from the user for deposits,
-	//and for checking that they have clicked Deposit before clicking Enter
+	
 	int balance = 10;
 	String[] inputSequence = new String[4];
 	String[] transactionHist = new String[100];
 	int inputSequenceIndex = 0;
 	int transactionIndex = 0;
 	boolean readyToEnter = false;
-	//Basic Constructor Setup - Setting the input array as empty
-	//Other basic setup options - Setting size, locaion etc, building app
+	
 	public ATM(){
 		super("ATM");
 		for(int i =0; i <= 3; i++){
@@ -31,10 +29,7 @@ public class ATM extends JFrame {
 	}
 	
 	protected void buildApp(){
-		//==================================
-		//GUI Setup (VIEW)
-		//==================================
-		//Basic Panel layout setup
+		
 		JLabel displayArea = new JLabel("<html>Instruction Area: <br> Please select a function from the buttons below <br> Current Balance: \u00A3" + balance + "</html>");
 		displayArea.setOpaque(true);
 		displayArea.setBackground(Color.white);
@@ -47,12 +42,10 @@ public class ATM extends JFrame {
 		inputDisplay.setBorder(BorderFactory.createLineBorder(Color.black));
 		bottomArea.add(inputDisplay, BorderLayout.NORTH);
 		
-		//Grid layout setup for buttons
 		GridBagLayout buttonGrid = new GridBagLayout();
 		buttonPanel.setLayout(buttonGrid);
 		GridBagConstraints bPConst = new GridBagConstraints();
 	
-		//Buttons SETUP
 		bPConst.weightx= 0.1;
 		bPConst.weighty= 0.1;
 		JButton withDraw1 = new JButton("Withdraw \u00A35");
@@ -147,10 +140,7 @@ public class ATM extends JFrame {
 		add(displayArea,  BorderLayout.NORTH);
 		add(bottomArea, BorderLayout.CENTER);
 		
-		//==================================
-		//Action Listener Setup (CONTROLLER)
-		//==================================
-		// 3 Withdraw buttons (Simply minus from balance if balance is not below ammount):
+		
 		withDraw1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				if(balance >= 5){
@@ -194,7 +184,7 @@ public class ATM extends JFrame {
 				}
 			}	
 		});
-		// Quit Button - Return to login
+	
 		quit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				JOptionPane.showMessageDialog(null, "Your Receipt: \n" + printReceipt());
@@ -203,7 +193,6 @@ public class ATM extends JFrame {
 				new Login();
 			}	
 		});
-		// Clear Button - Clear the input array (Method at bottom)
 		clear.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				inputDisplay.setText("Input Display: ");
@@ -213,7 +202,7 @@ public class ATM extends JFrame {
 				readyToEnter = false;
 			}	
 		});
-		// Number Buttons - Add a number to the input array
+	
 		number1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				inputDisplay.setText("Input Display: " + updateInput("1"));
@@ -305,10 +294,7 @@ public class ATM extends JFrame {
 			}	
 		});	
 	} 
-	//==================================
-	//Extra Methods for calculations(MODEL)
-	//==================================		
-	//Clears the string and resets the Input area
+
 	void clearInput(){
 		for(int i =0; i <= 3; i++){
 			inputSequence[i] = "";	
@@ -349,11 +335,11 @@ public class ATM extends JFrame {
 			return newString;
 		}
 	}
-	//Resetting the label to its original state with new balance
+
 	String finishedTransaction(){
 		return "Instruction Area: <br> Please select a function from the buttons below <br> Current Balance: \u00A3" + balance;
 	}
-	//Updating balance upon deposit
+
 	void updateBalance(int l){
 		balance += l;
 	}
@@ -362,7 +348,6 @@ public class ATM extends JFrame {
 		transactionHist[transactionIndex] = t;
 		transactionIndex++;
 	}
-	//Put the final receipt together and return it for printing
 	String printReceipt(){
 		if(inputSequence[0].equals(null)){
 			return "No Transactions Made!";
@@ -375,7 +360,7 @@ public class ATM extends JFrame {
 			return newString;
 	   }
 	}
-	//Main Method
+	
 	public static void main (String[] args){
 		new Login();	
 	}
